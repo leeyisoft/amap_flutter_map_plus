@@ -234,6 +234,16 @@
         [weakSelf.mapView clearDisk];
         result(nil);
     }];
+    [self.channel addMethodName:@"map#getScalePerPixel" withHandler:^(FlutterMethodCall * _Nonnull call, FlutterResult  _Nonnull result) {
+        if (weakSelf.mapView) {
+            // 使用MAMapView的metersPerPointForCurrentZoom属性
+            // 在当前缩放级别下，基于地图中心点，1 screen point 对应的距离(单位是米)
+            double scalePerPixel = weakSelf.mapView.metersPerPointForCurrentZoom;
+            result(@(scalePerPixel));
+        } else {
+            result(@(-1));
+        }
+    }];
 }
 
 //MARK: MAMapViewDelegate
